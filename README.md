@@ -1,6 +1,6 @@
 # wk10-team-profile-generator
 
-npm install
+npm i
 npm inquirer install
 
 -- jest install --
