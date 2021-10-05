@@ -17,7 +17,7 @@ const team = [];
 
 // Inquirer
 function init() {
-    console.log("Thanks for using the Team Profile Generator. Please follow the prompts to build a team. /n /n")
+    console.log("== Thanks for using the Team Profile Generator. Please follow the prompts to build a team. ==")
     
     inquirer.prompt([
         {
@@ -213,7 +213,7 @@ function init() {
                             // generate html on exit
                             const draft = generate(team);
                             fs.writeFile(outputPath, draft, err => {
-                                err ? console.log(err) : console.log('/n /n Team profile successfully created! DIST folder contains the newly generated HTML as well as style dependencies.');
+                                err ? console.log(err) : console.log('== Team profile successfully created! DIST folder contains the newly generated HTML as well as style dependencies. ==');
                             });
                         }
                     }) 
