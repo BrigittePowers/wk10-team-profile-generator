@@ -1,17 +1,17 @@
 // External required
 const inquirer = require('inquirer');
 const fs = require('fs');
+const path = require('path');
 
 // Internal required
-const Employee = require('./lib/employee');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
 const Manager = require('./lib/manager');
 const generate = require('./util/generateHTML');
 
 // Output
-const outputDir = path.resolve(__dirname, "dist");
-const outputPath = path.join(outputDir, "teamprofile.html");
+const OUTPUT_DIR = path.resolve(__dirname, "dist");
+const outputPath = path.join(OUTPUT_DIR, "teamprofile.html");
 
 const team = [];
 
@@ -39,7 +39,7 @@ function init() {
         {
             type: 'input',
             name: 'mID',
-            message: 'What is their 5-digit employee ID?',
+            message: 'What is their employee ID?',
             validate: function (answer) {
                 if (answer.length < 1) {
                     return console.log("Input required to continue.")
@@ -72,7 +72,7 @@ function init() {
     ])
 
         .then(function (managerRes) {
-            const manager = new Manager(managerRes.mName, managerRes.mID, managerRes.mEmail, managerRes.mNumber);
+            const manager = new Manager(managerRes.mName, managerRes.mID, managerRes.mEmail, managerRes.mNum);
             team.push(manager);
 
             makeTeam();
@@ -87,17 +87,63 @@ function init() {
                         choices: [
                             "Intern",
                             "Engineer",
-                            "[Finish Making Team]"
+                            "[Done: Generate Team Profile]"
                         ],
                     }
                 ])
                     .then(function (role) {
-                        // INTER
-
-                        if (role.Employee === "Intern") {
+                        if (role.employee === "Intern") {
                             console.log('Please answer the following questions to add an intern to the team.')
                             inquirer.prompt([
-
+                                {
+                                    type: 'input',
+                                    name: 'iName',
+                                    message: '[Intern] What is their name? (Firstname Lastname)',
+                                    validate: function (answer) {
+                                        const regName =  /^[a-zA-Z]+( [a-zA-Z]+)+$/;
+                                        // input required
+                                        if (answer.length < 1) {
+                                            return console.log("Input required to continue.")
+                                        // titlecase required
+                                        } else if (!regName.test(answer)) {
+                                            return console.log("Incorrect format (FirstName Lastname required.")
+                                        }
+                                        return true;
+                                    }
+                                },
+                                {
+                                    type: 'input',
+                                    name: 'iID',
+                                    message: 'What is their employee ID?',
+                                    validate: function (answer) {
+                                        if (answer.length < 1) {
+                                            return console.log("Input required to continue.")
+                                        }
+                                        return true;
+                                    } 
+                                },
+                                {
+                                    type: 'input',
+                                    name: 'iEmail',
+                                    message: 'And their email?',
+                                    validate: function (answer) {
+                                        if (answer.length < 1) {
+                                            return console.log("Input required to continue.")
+                                        }
+                                        return true;
+                                    } 
+                                },
+                                {
+                                    type: 'input',
+                                    name: 'iSchool',
+                                    message: 'And lastly, what school do they attend?',
+                                    validate: function (answer) {
+                                        if (answer.length < 1) {
+                                            return console.log("Input required to continue.")
+                                        }
+                                        return true;
+                                    }
+                                }
                             ])
                                 .then(function (internRes) {
                                     const intern = new Intern(internRes.iName, internRes.iID, internRes.iEmail, internRes.iSchool);
@@ -105,13 +151,69 @@ function init() {
                                     makeTeam();
                                 })
                         // ENGINEER
-                        } else if (role.Employee === "Engineer") {
+                        } else if (role.employee === "Engineer") {
                             console.log('Please answer the following questions to add an engineer to the team.')
+                            inquirer.prompt([
+                                {
+                                    type: 'input',
+                                    name: 'eName',
+                                    message: '[Engineer] What is their name? (Firstname Lastname)',
+                                    validate: function (answer) {
+                                        const regName =  /^[a-zA-Z]+( [a-zA-Z]+)+$/;
+                                        // input required
+                                        if (answer.length < 1) {
+                                            return console.log("Input required to continue.")
+                                        // titlecase required
+                                        } else if (!regName.test(answer)) {
+                                            return console.log("Incorrect format (FirstName Lastname required.")
+                                        }
+                                        return true;
+                                    }
+                                },
+                                {
+                                    type: 'input',
+                                    name: 'eID',
+                                    message: 'What is their employee ID?',
+                                    validate: function (answer) {
+                                        if (answer.length < 1) {
+                                            return console.log("Input required to continue.")
+                                        }
+                                        return true;
+                                    } 
+                                },
+                                {
+                                    type: 'input',
+                                    name: 'eEmail',
+                                    message: 'And their email?',
+                                    validate: function (answer) {
+                                        if (answer.length < 1) {
+                                            return console.log("Input required to continue.")
+                                        }
+                                        return true;
+                                    } 
+                                },
+                                {
+                                    type: 'input',
+                                    name: 'eGithub',
+                                    message: 'And lastly, what is their GitHub username?',
+                                    validate: function (answer) {
+                                        if (answer.length < 1) {
+                                            return console.log("Input required to continue.")
+                                        }
+                                        return true;
+                                    }
+                                }
+                            ])
+                                .then(function (engineerRes) {
+                                    const engineer = new Engineer(engineerRes.eName, engineerRes.eID, engineerRes.eEmail, engineerRes.eGithub);
+                                    team.push(engineer);
+                                    makeTeam();
+                                })
                         } else {
                             // generate html on exit
                             const draft = generate(team);
                             fs.writeFile(outputPath, draft, err => {
-                                err ? console.log(err) : console.log('Team profile successfully created!');
+                                err ? console.log(err) : console.log('/n /n Team profile successfully created! DIST folder contains the newly generated HTML as well as style dependencies.');
                             });
                         }
                     }) 

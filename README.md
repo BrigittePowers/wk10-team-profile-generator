@@ -1,6 +1,7 @@
 # wk10-team-profile-generator
 
 npm i
-npm inquirer install
+npm install inquirer
 
 -- jest install --
+npm install jestnp

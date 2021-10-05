@@ -1,0 +1,98 @@
+body {
+    background-color: #27241D;
+    color: #E8E6E1;
+    font-family: 'Yaldevi', sans-serif;
+}
+
+a {
+    color: #E8E6E1;
+    text-decoration: none;
+}
+
+a:hover {
+    color:rgb(111, 199, 177);
+    text-decoration: none;
+}
+
+h2 i {
+    padding-right: 5px;
+}
+
+.title-wrap {
+    background-color: #504A40;
+    height: 100px;
+}
+
+header {
+    display: flex;
+    position: sticky;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Mate SC', serif;
+    font-size: 150%;
+}
+
+.emp-card{ 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 25px;
+}
+
+.emp-card .wrapper {
+    padding: 10px;
+    display: flex;
+}
+
+.manager {
+    order: -1;
+
+}
+
+.engineer {
+    order: 1;
+}
+
+.intern {
+    order: 2;
+}
+
+.card {
+    background-color: #423D33;
+    padding: 10px;
+}
+
+.role {
+    font-size: 150%;;
+    font-family: 'Mate SC', serif;
+    text-align: center
+}
+
+.role-manager { 
+    background-color: rgb(228, 133, 191);
+    color: #423D33;
+}
+
+.role-engineer {
+    background-color: rgb(111, 199, 177);
+    color: #423D33;
+}
+
+.role-intern {
+    background-color: rgb(140, 119, 218);
+    color: #423D33;
+}
+
+.name {
+    text-align: center;
+    font-size: 180%;
+    margin-top: 5%;
+    margin-bottom: 0;
+}
+
+.id {
+    margin-top: 5%;
+    font-size: 120%;
+    color: #A39E93;
+    text-align: center;
+}
